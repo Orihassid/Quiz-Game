@@ -85,6 +85,7 @@ const App = () => {
   const handleStartQuiz = () => {
     setGameStarted(false)
     setGameState(true)
+    console.log('here')
 
   }
   const increaseButtonStyle = {
