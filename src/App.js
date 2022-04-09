@@ -23,9 +23,7 @@ const App = () => {
   const [resultState, setResultState] = useState(false)
   const [disableAddTime, setDisableAddTime] = useState(false)
   const [disableFiftyFifty, setDisablefiftyFifty] = useState(false)
-
-
-
+  const [showAnsColors,setShowAnsColors] = useState(false);
 
   const [score, setScore] = useState(0)
   const reset_timer = () => {
@@ -43,22 +41,27 @@ const App = () => {
   }, [])
 
   const onAnswer = (ans) => {
-    const quest = questions[questionNumber];
-    if (quest.correct_answer === ans) {
-      setCorrectAns(correctAns + 1)
-      setScore(score + 10);
 
-    }
-    if (questionNumber === questions.length - 1) {
-      setResultState(true)
-      setGameState(false)
-      setDisableAddTime(false)
-      setDisablefiftyFifty(false)
-    }
-    else
-      nextQuestion();
+    setTimeout(()=>
+    {
+      const quest = questions[questionNumber];
+      if (quest.correct_answer === ans) {
+        setCorrectAns(correctAns + 1)
+        setScore(score + 10);
+      }
+      if (questionNumber === questions.length - 1) {
+        setResultState(true)
+        setGameState(false)
+        setDisableAddTime(false)
+        setDisablefiftyFifty(false)
+      }
+      else
+        nextQuestion();
+    },1000)
+    
   }
   const nextQuestion = () => {
+    setShowAnsColors(false)
     if (questionNumber == questions.length - 1) {
       setResultState(true)
       setGameState(false)
@@ -88,6 +91,16 @@ const App = () => {
     console.log('here')
 
   }
+  const handleTimeEnd = ()=>
+  {
+    setShowAnsColors(true)
+    setTimeout(()=>
+    {
+      nextQuestion();
+    },1000)
+
+  }
+
   const increaseButtonStyle = {
     color: 'red',
     position: 'absolute',
@@ -103,7 +116,7 @@ const App = () => {
   }
   return (
     <div className="main-home">
-      <h1 className="quiz-title">Quiz Me</h1>
+      <h1 className="quiz-title">Quiz Meeeee</h1>
       {gameStarted && (
         <div>
           <p className="quiz-description">{`The quiz contains ${questions.length} questions`}</p>
@@ -114,9 +127,10 @@ const App = () => {
 
       {gameState && <div className="question-main"> <div className="name-title">Good luck <span className="player-name"> {name}</span></div>
         {questions.length > 0 && <Timer resetTimer={resetTimer} onIncreaseClicked={() => {setDisableAddTime(true) }}
-          onTimeEnd={nextQuestion} increaseButtonStyle={increaseButtonStyle} disableIncreaseTimer={disableAddTime} />}
+          onTimeEnd={handleTimeEnd} increaseButtonStyle={increaseButtonStyle} disableIncreaseTimer={disableAddTime} />}
         {questionNumber < questions.length &&
-          <Question disableFiftyFifty={disableFiftyFifty} onFiftyFiftyClicked={() => {setDisablefiftyFifty(true) }} FiftyFiftyStyle={fiftyStyle} quest={questions[questionNumber]} onAnswer={onAnswer} />}
+          <Question showColors={showAnsColors} numOfQuestion = {questionNumber} totalNumOfQuestion = {questions.length} disableFiftyFifty={disableFiftyFifty} onFiftyFiftyClicked={() => {setDisablefiftyFifty(true) }} 
+          FiftyFiftyStyle={fiftyStyle} quest={questions[questionNumber]} onAnswer={onAnswer} />}
 
       </div>}
       {resultState && <Results correct={correctAns} numOfQustions={questions.length + 1} score={score} playAgain={onPlayAgain}> </Results>}

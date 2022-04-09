@@ -25,20 +25,37 @@ function htmlDecodeAns(arr) {
     return decodeAns
 
 }
-const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFiftyFiftyClicked }) => {
+const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFiftyFiftyClicked,numOfQuestion,totalNumOfQuestion,showColors = false }) => {
 
     const [formatAns, setFormatAns] = useState([]);
     let formatQuest = htmlDecodeQuest(quest.question)
+    const showAnswersColors = ()=>{
+        let answers =[...formatAns]
+        console.log('answers',answers)
+        for(let ans of answers)
+        {
+            console.log('here')
+            ans.color = ans.correct ? 'green' : 'red';
+        }
+        setFormatAns(answers)
+    }
+   
     useEffect(() => {
         const answers = [...quest.incorrect_answers];
         answers.push(quest.correct_answer);
         let formatAnswers = htmlDecodeAns(answers)
         shuffleArray(formatAnswers)
         formatAnswers = formatAnswers.map((ans) => {
-            return { ans: ans, disabled: false, correct: quest.correct_answer == ans }
+            return { ans: ans, disabled: false, correct: quest.correct_answer == ans, color: null }
         })
         setFormatAns(formatAnswers)
     }, [quest])
+
+    useEffect(()=>{
+        if(showColors)
+            showAnswersColors();
+     },[showColors])
+
     const handleFiftyFifty = () => {
         const answers = [...formatAns];
         let counter = 2;
@@ -59,11 +76,16 @@ const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFifty
             onFiftyFiftyClicked();
     }
     disableFiftyFifty = disableFiftyFifty  || quest.type != "multiple"
+    const handleClick =(ans)=>{
+          showAnswersColors()
+          onAnswer(ans.ans)
+    }
 
     return <div>
-
+        <h3 style = {{color : '#734abae6'}} > {numOfQuestion+1}/{totalNumOfQuestion}</h3>
         <div className="question-heading"> <h1 >{formatQuest}</h1></div>
-        {formatAns.map((ans, index) => <button className="question-option" hidden={ans.disabled} key={index} onClick={() => { onAnswer(ans.ans) }}>{ans.ans}</button>)}
+        {formatAns.map((ans, index) => <button className="question-option" style={{backgroundColor:ans.color}} hidden={ans.disabled} key={index}
+         onClick={()=>{handleClick(ans)}}>{ans.ans}</button>)}
         {<div>
             {<button className="button-29 left-btn" id="fifty-btn" disabled={disableFiftyFifty} style={FiftyFiftyStyle} onClick={fiftyFiftyEvent}>50:50</button>}
         </div>}
