@@ -91,6 +91,8 @@ const App = () => {
     setGameState(false);
     setResultState(false)
     setGameStarted(true)
+    setCorrectAns(0);
+    setScore(0);
   }
   const handleStartQuiz = () => {
     setGameStarted(false)

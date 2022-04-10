@@ -32,7 +32,7 @@ const Timer = ({ onTimeEnd, resetTimer, initialSeconds = 30, timeToAdd = 10, inc
             onIncreaseClicked();
 
     }
-    let timebtn = () => {
+    let timerFormat = () => {
         let progress = document.getElementById('pro')
         let progress2 = document.getElementById('pro2')
         let time = document.getElementById('time-o')
@@ -46,7 +46,7 @@ const Timer = ({ onTimeEnd, resetTimer, initialSeconds = 30, timeToAdd = 10, inc
     return (
         <div>
             <div >
-                <span onClick={timebtn}><button className='button-29 right-btn' disabled={disableIncreaseTimer} style={increaseButtonStyle} onClick={incraseButtonEvent}  >Extra 10 Seconds</button></span>
+                <span onClick={timerFormat}><button className='button-29 right-btn' disabled={disableIncreaseTimer} style={increaseButtonStyle} onClick={incraseButtonEvent}  >Get 10 Seconds</button></span>
             </div>
             <h1 id='time-o' className='time-e'>{seconds}</h1>
             <div className='timer-main show-the-time' id='timermain-active'>   <h1 className='timer-sec'><div id='pro' className="progress">
