@@ -5,6 +5,8 @@
 - [Technologies](#technologies-)
 - [Screenshots](#screenshots-)
 
+
+
 <br />
 
 # Details
@@ -48,3 +50,5 @@ JavaScript, React,HTML,CSS
 ![Win](https://i.ibb.co/frT4VQn/screenshot6.png)
 
 <br />
+
+
