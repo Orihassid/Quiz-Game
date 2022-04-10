@@ -1,12 +1,9 @@
- ![Quiz-me](https://ibb.co/NYwcLd7/quiz-me.png)
+ ![Quiz-me](https://i.ibb.co/m4HGYcP/quiz-me.png)
  
- 
- Contents
 
 - [Details](#details-)
 - [Technologies](#technologies-)
 - [Screenshots](#screenshots-)
-- [Video](#video-)
 
 <br />
 
@@ -21,12 +18,33 @@ In questions of truth or false it is not possible to use 50 50. The questions ar
 <br />
 
 # Technologies 
+JavaScript, React,HTML,CSS
 
-![HTML Icon](https://i.ibb.co/9tyHGr7/html-logo.png, "HTML")
-![CSS Icon](https://i.ibb.co/b3QNSgX/css-logo.png, "CSS")
-![JavaScript Icon](https://i.ibb.co/L5RS8g1/Group-11.png, "JavaScript")
-![React Icon](https://i.ibb.co/BBFKyz9/Group-9.png, "React")
 
 <br />
 
+# Screenshots 🎮
 
+![Open screen](https://i.ibb.co/KG4C9qx/screenshot1.png)
+
+<br />
+
+![Game question](https://i.ibb.co/9qH7Cv2/screenshot2.png)
+
+<br />
+
+![Answered question](https://i.ibb.co/ncmgBwR/screenshot3.png)
+
+<br />
+
+![Game finished](https://i.ibb.co/W5JtnmW/screenshot4.png)
+
+<br />
+
+![Lost](https://i.ibb.co/DG3zz38/screenshot5.png)
+
+<br />
+
+![Win](https://i.ibb.co/frT4VQn/screenshot6.png)
+
+<br />
