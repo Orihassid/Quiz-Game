@@ -1,4 +1,5 @@
 
+
 body {
     --light: hsl(220, 50%, 90%);
     --primary: hsl(255, 30%, 55%);
@@ -13,6 +14,8 @@ body {
 }
 
 
+
+/* box */
 .box {
     display: flex;
     flex-direction: column;
@@ -192,6 +195,12 @@ body {
 }
 
 
+
+
+
+/* Celebrations css */
+
+
 section h2 {
     color: #fff;
     font-size: 2em;
@@ -281,8 +290,33 @@ section .set div:nth-child(8) {
         transform: translateX(-20px);
     }
 
+
+
+
+
     100% {
         top: 110%;
         transform: translateX(-20px);
     }
+}
+
+.win {
+    display: none;
+
+}
+
+.lost {
+    display: none;
+}
+
+.show-ico {
+    display: initial !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.show-modal {
+    display: inherit;
 }

@@ -13,6 +13,8 @@ function compare(a, b) {
 }
 
 const App = () => {
+
+//init states
   const [gameStarted, setGameStarted] = useState(true)
   const [questions, setQuestions] = useState([])
   const [questionNumber, setQuestionNumber] = useState(0)
@@ -23,27 +25,31 @@ const App = () => {
   const [resultState, setResultState] = useState(false)
   const [disableAddTime, setDisableAddTime] = useState(false)
   const [disableFiftyFifty, setDisablefiftyFifty] = useState(false)
-  const [showAnsColors,setShowAnsColors] = useState(false);
-
+  const [showAnsColors, setShowAnsColors] = useState(false);
   const [score, setScore] = useState(0)
-  const reset_timer = () => {
-    setResetTimer(!resetTimer);
-  }
+
+  
+//fetch questions from the url
   const fetchQuests = async () => {
     const response = await fetch("https://opentdb.com/api.php?amount=100")
     const data = await response.json()
-    let arr = data.results.splice(0,10)
+    let arr = data.results.splice(0, 10)
     arr.sort(compare);//sort by difficulty
     setQuestions(arr)
   }
+
   useEffect(() => {
     fetchQuests();
+
   }, [])
 
-  const onAnswer = (ans) => {
+  
+  const reset_timer = () => {
+    setResetTimer(!resetTimer);
+  }
 
-    setTimeout(()=>
-    {
+  const onAnswer = (ans) => {
+    setTimeout(() => {
       const quest = questions[questionNumber];
       if (quest.correct_answer === ans) {
         setCorrectAns(correctAns + 1)
@@ -57,8 +63,8 @@ const App = () => {
       }
       else
         nextQuestion();
-    },1000)
-    
+    }, 1000)
+
   }
   const nextQuestion = () => {
     setShowAnsColors(false)
@@ -69,7 +75,7 @@ const App = () => {
       setDisablefiftyFifty(false)
       return;
     }
-    reset_timer()
+    reset_timer()// reset the timer to the next question
     setQuestionNumber(prev => {
       if (prev + 1 < questions.length)
         return prev + 1;
@@ -77,6 +83,7 @@ const App = () => {
     })
   }
 
+  //reset all states to restart the game
   const onPlayAgain = async () => {
     await fetchQuests();
     setQuestionNumber(0)
@@ -88,19 +95,15 @@ const App = () => {
   const handleStartQuiz = () => {
     setGameStarted(false)
     setGameState(true)
-    console.log('here')
 
   }
-  const handleTimeEnd = ()=>
-  {
+  const handleTimeEnd = () => {
     setShowAnsColors(true)
-    setTimeout(()=>
-    {
+    setTimeout(() => {
       nextQuestion();
-    },1000)
+    }, 1000)
 
   }
-
   const increaseButtonStyle = {
     color: 'red',
     position: 'absolute',
@@ -116,22 +119,28 @@ const App = () => {
   }
   return (
     <div className="main-home">
-      <h1 className="quiz-title">Quiz Meeeee</h1>
+
+
+      <h1 className="quiz-title">Quiz Me</h1>
       {gameStarted && (
         <div>
           <p className="quiz-description">{`The quiz contains ${questions.length} questions`}</p>
-          <input  className="input-name" type="text" onChange={(e) => setName(e.target.value)} value={name}
-          placeholder="Enter Player Name" />
+          <input
+            className="input-name"
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            placeholder="Enter Player Name"
+          />
           <div className="start-btn"><div><button className="button-64" onClick={() => handleStartQuiz()} > <span className="text">Start Quiz</span>  </button> </div>   </div></div>)}
 
 
       {gameState && <div className="question-main"> <div className="name-title">Good luck <span className="player-name"> {name}</span></div>
-        {questions.length > 0 && <Timer resetTimer={resetTimer} onIncreaseClicked={() => {setDisableAddTime(true) }}
+        {questions.length > 0 && <Timer resetTimer={resetTimer} onIncreaseClicked={() => { console.log('here'); setDisableAddTime(true) }}
           onTimeEnd={handleTimeEnd} increaseButtonStyle={increaseButtonStyle} disableIncreaseTimer={disableAddTime} />}
         {questionNumber < questions.length &&
-          <Question showColors={showAnsColors} numOfQuestion = {questionNumber} totalNumOfQuestion = {questions.length} disableFiftyFifty={disableFiftyFifty} onFiftyFiftyClicked={() => {setDisablefiftyFifty(true) }} 
-          FiftyFiftyStyle={fiftyStyle} quest={questions[questionNumber]} onAnswer={onAnswer} />}
-
+          <Question showColors={showAnsColors} numOfQuestion={questionNumber} totalNumOfQuestion={questions.length} disableFiftyFifty={disableFiftyFifty} onFiftyFiftyClicked={() => { setDisablefiftyFifty(true) }}
+            FiftyFiftyStyle={fiftyStyle} quest={questions[questionNumber]} onAnswer={onAnswer} />}
       </div>}
       {resultState && <Results correct={correctAns} numOfQustions={questions.length + 1} score={score} playAgain={onPlayAgain}> </Results>}
     </div>)

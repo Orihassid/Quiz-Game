@@ -25,21 +25,18 @@ function htmlDecodeAns(arr) {
     return decodeAns
 
 }
-const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFiftyFiftyClicked,numOfQuestion,totalNumOfQuestion,showColors = false }) => {
+const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFiftyFiftyClicked, numOfQuestion, totalNumOfQuestion, showColors = false }) => {
 
     const [formatAns, setFormatAns] = useState([]);
     let formatQuest = htmlDecodeQuest(quest.question)
-    const showAnswersColors = ()=>{
-        let answers =[...formatAns]
-        console.log('answers',answers)
-        for(let ans of answers)
-        {
-            console.log('here')
+    const showAnswersColors = () => {
+        let answers = [...formatAns]
+        for (let ans of answers) {
             ans.color = ans.correct ? 'green' : 'red';
         }
         setFormatAns(answers)
     }
-   
+
     useEffect(() => {
         const answers = [...quest.incorrect_answers];
         answers.push(quest.correct_answer);
@@ -51,10 +48,10 @@ const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFifty
         setFormatAns(formatAnswers)
     }, [quest])
 
-    useEffect(()=>{
-        if(showColors)
+    useEffect(() => {
+        if (showColors)
             showAnswersColors();
-     },[showColors])
+    }, [showColors])
 
     const handleFiftyFifty = () => {
         const answers = [...formatAns];
@@ -67,30 +64,40 @@ const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFifty
         }
         setFormatAns(answers);
     }
-
-
     const fiftyFiftyEvent = () => {
 
         handleFiftyFifty();
         if (onFiftyFiftyClicked)
             onFiftyFiftyClicked();
     }
-    disableFiftyFifty = disableFiftyFifty  || quest.type != "multiple"
-    const handleClick =(ans)=>{
-          showAnswersColors()
-          onAnswer(ans.ans)
+    disableFiftyFifty = disableFiftyFifty || quest.type != "multiple"
+    const handleClick = (ans) => {
+        showAnswersColors()
+        onAnswer(ans.ans)
     }
+    let runGreenTimeLine = () => {
+        let progress = document.getElementById('pro')
+        let progress2 = document.getElementById('pro2')
+        let time = document.getElementById('time-o')
+        let timeActive = document.getElementById('timermain-active')
+        timeActive.classList.remove('timer-active')
+        time.classList.remove('time-b')
+        progress.classList.remove('progress-extra')
+        progress2.classList.remove('progress-extra')
+        let timeMain = document.getElementById('timermain')
+        timeMain.classList.toggle('show-the-time')
+        timeActive.classList.toggle('show-the-time')
 
+
+    }
     return <div>
-        <h3 style = {{color : '#734abae6'}} > {numOfQuestion+1}/{totalNumOfQuestion}</h3>
+        <h3 style={{ color: '#734abae6' }} > {numOfQuestion + 1}/{totalNumOfQuestion}</h3>
         <div className="question-heading"> <h1 >{formatQuest}</h1></div>
-        {formatAns.map((ans, index) => <button className="question-option" style={{backgroundColor:ans.color}} hidden={ans.disabled} key={index}
-         onClick={()=>{handleClick(ans)}}>{ans.ans}</button>)}
+        {formatAns.map((ans, index) => <span key={index} onClick={runGreenTimeLine}><button className="question-option" style={{ backgroundColor: ans.color }} hidden={ans.disabled} key={index} onClick={() => { handleClick(ans) }}>{ans.ans}</button></span>)}
         {<div>
             {<button className="button-29 left-btn" id="fifty-btn" disabled={disableFiftyFifty} style={FiftyFiftyStyle} onClick={fiftyFiftyEvent}>50:50</button>}
         </div>}
     </div>
 
 }
-
 export default Question
