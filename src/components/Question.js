@@ -34,7 +34,7 @@ const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFifty
         for (let ans of answers) {
             ans.color = ans.correct ? 'green' : 'red';
         }
-        setFormatAns(answers)
+        setFormatAns(answers)// render again with the right colors
     }
 
     useEffect(() => {
@@ -70,7 +70,7 @@ const Question = ({ quest, onAnswer, disableFiftyFifty, FiftyFiftyStyle, onFifty
         if (onFiftyFiftyClicked)
             onFiftyFiftyClicked();
     }
-    disableFiftyFifty = disableFiftyFifty || quest.type != "multiple"
+    disableFiftyFifty = disableFiftyFifty || quest.type != "multiple" // only if we are in mulitple question
     const handleClick = (ans) => {
         showAnswersColors()
         onAnswer(ans.ans)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect,useCallback } from "react"
 import "./App.css"
 import Question from "./components/Question"
 import Timer from "./components/Timer"
@@ -51,17 +51,17 @@ const App = () => {
   const onAnswer = (ans) => {
     setTimeout(() => {
       const quest = questions[questionNumber];
-      if (quest.correct_answer === ans) {
-        setCorrectAns(correctAns + 1)
+      if (quest.correct_answer === ans) {//if the users answer correct
+        setCorrectAns(correctAns + 1)// set +1 to the correct ans
         setScore(score + 10);
       }
-      if (questionNumber === questions.length - 1) {
+      if (questionNumber === questions.length - 1) {// if is the final question
         setResultState(true)
         setGameState(false)
         setDisableAddTime(false)
         setDisablefiftyFifty(false)
       }
-      else
+      else// move to the next question
         nextQuestion();
     }, 1000)
 
@@ -99,13 +99,13 @@ const App = () => {
     setGameState(true)
 
   }
-  const handleTimeEnd = () => {
+
+  const handleTimeEnd = useCallback(() => {//when the question number change the useEffect is calling
     setShowAnsColors(true)
     setTimeout(() => {
       nextQuestion();
     }, 1000)
-
-  }
+  },[questionNumber])
   const increaseButtonStyle = {
     color: 'red',
     position: 'absolute',
@@ -138,7 +138,7 @@ const App = () => {
 
 
       {gameState && <div className="question-main"> <div className="name-title">Good luck <span className="player-name"> {name}</span></div>
-        {questions.length > 0 && <Timer resetTimer={resetTimer} onIncreaseClicked={() => { console.log('here'); setDisableAddTime(true) }}
+        {questions.length > 0 && <Timer resetTimer={resetTimer} onIncreaseClicked={() => setDisableAddTime(true) }
           onTimeEnd={handleTimeEnd} increaseButtonStyle={increaseButtonStyle} disableIncreaseTimer={disableAddTime} />}
         {questionNumber < questions.length &&
           <Question showColors={showAnsColors} numOfQuestion={questionNumber} totalNumOfQuestion={questions.length} disableFiftyFifty={disableFiftyFifty} onFiftyFiftyClicked={() => { setDisablefiftyFifty(true) }}

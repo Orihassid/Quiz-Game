@@ -13,8 +13,7 @@ const Timer = ({ onTimeEnd, resetTimer, initialSeconds = 30, timeToAdd = 10, inc
                 if (prev > 0) {
                     if (prev - 1 === 0) {
                         if (onTimeEnd)
-                            onTimeEnd();
-                            
+                            onTimeEnd();        
                     }
                     return prev - 1;
                 }
@@ -29,7 +28,7 @@ const Timer = ({ onTimeEnd, resetTimer, initialSeconds = 30, timeToAdd = 10, inc
     const incraseButtonEvent = () => {
         setSeconds(seconds + timeToAdd)
         if (onIncreaseClicked)
-            onIncreaseClicked();
+            onIncreaseClicked(); //disable button
 
     }
     let timerFormat = () => {
