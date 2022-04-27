@@ -25,7 +25,7 @@ JavaScript, React,HTML,CSS
 
 <br />
 
-# Screenshots 🎮
+# Screenshots 
 
 ![Open screen](https://i.ibb.co/KG4C9qx/screenshot1.png)
 
