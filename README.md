@@ -15,7 +15,7 @@ The Quiz is a trivia game that includes 10 questions from different fields. To p
 Lifelines can be used once throughout the quiz.
 In questions of truth or false it is not possible to use 50 50. The questions are arranged at an increasing level of difficulty.
 
-
+Link to play: https://chimerical-sable-aa3bc7.netlify.app/
 
 <br />
 
